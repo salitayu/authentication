@@ -38,8 +38,19 @@ func (s Session) isExpired() bool {
 }
 
 func (rc *RedisClient) CheckSession(w http.ResponseWriter, r *http.Request) int {
-	sessionToken := ""
-	err := json.NewDecoder(r.Body).Decode(&sessionToken)
+	c, err := r.Cookie("session_token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return http.StatusUnauthorized
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return http.StatusBadRequest
+	}
+	sessionToken := c.Value
+	fmt.Println("sessionToken", sessionToken)
+	err = json.NewDecoder(r.Body).Decode(&sessionToken)
+	fmt.Println("err", err)
 	if err != nil {
 		fmt.Fprintf(w, "%s", err)
 		return http.StatusUnauthorized

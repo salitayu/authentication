@@ -57,6 +57,7 @@ func main() {
 	http.Handle("/", r)
 	r.HandleFunc("/register", env.Register).Methods("POST")
 	r.HandleFunc("/login", env.Login).Methods("POST")
+	r.HandleFunc("/logout", env.Logout).Methods("POST")
 	log.Fatal(http.ListenAndServe(":8080", handlers.CORS(originsOk, headersOk, methodsOk, exposedHeaders, allowCreds)(r)))
 }
 
