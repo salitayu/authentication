@@ -49,12 +49,6 @@ func (rc *RedisClient) CheckSession(w http.ResponseWriter, r *http.Request) int 
 	}
 	sessionToken := c.Value
 	fmt.Println("sessionToken", sessionToken)
-	err = json.NewDecoder(r.Body).Decode(&sessionToken)
-	fmt.Println("err", err)
-	if err != nil {
-		fmt.Fprintf(w, "%s", err)
-		return http.StatusUnauthorized
-	}
 
 	// Check session token from cookie and redis
 	sessionTokenRedis, err := rc.Conn.Get(sessionToken).Result()
