@@ -3,6 +3,7 @@ package models
 import (
 	"authentication/authtools"
 	"database/sql"
+	"fmt"
 )
 
 type LoginModel struct {
@@ -47,6 +48,8 @@ func (lm LoginModel) Register(u User) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	fmt.Println("user")
+	fmt.Println(u)
 	return true, nil
 }
 

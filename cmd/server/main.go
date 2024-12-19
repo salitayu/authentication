@@ -27,16 +27,17 @@ func main() {
 		log.Fatalf("An error occured. Err: %s", err)
 	}
 	host := "localhost"
-	port := "5432"
+	port := "54321"
 	user := "postgres"
 	pass := "tan"
-	dbname := "authentication"
+	dbname := "postgresauthentication"
 	newport, err := strconv.Atoi(port)
 	if err != nil {
 		log.Fatal(err)
 	}
 	conn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, newport, user, pass, dbname)
 	db, err := sql.Open("postgres", conn)
+	fmt.Println("conn ", conn)
 	if err != nil {
 		log.Fatal(err)
 	}

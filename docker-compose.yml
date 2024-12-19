@@ -1,4 +1,19 @@
 services:
+  db:
+    build:
+      context: ./Docker
+      dockerfile: db.Dockerfile
+    image: postgres:latest
+    restart: always
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=tan
+    ports:
+      - "54321:5432"
+    volumes:
+      - /var/lib/postgresql/data
+      - ./Docker/init.sql:/docker-entrypoint-initdb.d/init.sql
   cache:
     image: redis
     restart: always
